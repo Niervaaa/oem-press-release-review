@@ -1,0 +1,402 @@
+{
+  "returncode": 0,
+  "message": "",
+  "result": {
+    "bread": {
+      "brandid": 999,
+      "brandname": "匿名品牌",
+      "seriesid": 999,
+      "seriesname": "Anonymous-Series-001"
+    },
+    "conditionlist": [],
+    "titlelist": [
+      {
+        "itemtype": "参数信息",
+        "groupname": "参数信息",
+        "items": [
+          {
+            "titleid": 1,
+            "itemname": "车型名称"
+          },
+          {
+            "titleid": 3,
+            "itemname": "厂商指导价(元)"
+          },
+          {
+            "titleid": 6,
+            "itemname": "能源类型"
+          },
+          {
+            "titleid": 8,
+            "itemname": "上市时间"
+          },
+          {
+            "titleid": 21,
+            "itemname": "长*宽*高(mm)"
+          },
+          {
+            "titleid": 34,
+            "itemname": "轴距(mm)"
+          },
+          {
+            "titleid": 79,
+            "itemname": "系统综合功率(kW)"
+          },
+          {
+            "titleid": 86,
+            "itemname": "电池类型"
+          },
+          {
+            "titleid": 152,
+            "itemname": "空气悬挂类型"
+          },
+          {
+            "titleid": 153,
+            "itemname": "整体主动转向系统"
+          },
+          {
+            "titleid": 164,
+            "itemname": "激光雷达数量"
+          },
+          {
+            "titleid": 165,
+            "itemname": "激光雷达线数"
+          },
+          {
+            "titleid": 167,
+            "itemname": "辅助驾驶系统"
+          },
+          {
+            "titleid": 168,
+            "itemname": "辅助驾驶等级"
+          },
+          {
+            "titleid": 247,
+            "itemname": "后排液晶屏幕尺寸"
+          },
+          {
+            "titleid": 249,
+            "itemname": "后排投影系统"
+          },
+          {
+            "titleid": 293,
+            "itemname": "座椅布局"
+          }
+        ]
+      }
+    ],
+    "datalist": [
+      {
+        "specid": 1,
+        "specname": "2026款 增程 Max 长续航版",
+        "specstatus": 20,
+        "year": 0,
+        "minprice": "19.88万",
+        "dealerprice": 0,
+        "condition": [
+          "SUV",
+          "增程式",
+          "2026"
+        ],
+        "paramconflist": [
+          {
+            "titleid": 1,
+            "itemname": "2026款 增程 Max 长续航版",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 3,
+            "itemname": "19.88万",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 6,
+            "itemname": "增程式",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 8,
+            "itemname": "2026-10-01",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 21,
+            "itemname": "5299*2010*1815",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 34,
+            "itemname": "3110",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 79,
+            "itemname": "280",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 86,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "磷酸铁锂电池",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 152,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 153,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 164,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "1个",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 165,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "896线",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 167,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "示例智驾",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 168,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "L2",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 247,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "20.8英寸",
+                "value": "○"
+              }
+            ]
+          },
+          {
+            "titleid": 249,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 293,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "2-2-2",
+                "value": "●"
+              }
+            ]
+          }
+        ],
+        "sort": 1
+      },
+      {
+        "specid": 2,
+        "specname": "2026款 增程 四驱 Ultra+旗舰 长续航版",
+        "specstatus": 20,
+        "year": 0,
+        "minprice": "22.88万",
+        "dealerprice": 0,
+        "condition": [
+          "SUV",
+          "增程式",
+          "2026"
+        ],
+        "paramconflist": [
+          {
+            "titleid": 1,
+            "itemname": "2026款 增程 四驱 Ultra+旗舰 长续航版",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 3,
+            "itemname": "22.88万",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 6,
+            "itemname": "增程式",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 8,
+            "itemname": "2026-10-01",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 21,
+            "itemname": "5299*2010*1800",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 34,
+            "itemname": "3110",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 79,
+            "itemname": "420",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 86,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "磷酸铁锂电池",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 152,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "双腔",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 153,
+            "itemname": "●",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 164,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "4个",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 165,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "896线",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 167,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "示例智驾",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 168,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "L2",
+                "value": "●"
+              }
+            ]
+          },
+          {
+            "titleid": 247,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "20.8英寸",
+                "value": "○"
+              }
+            ]
+          },
+          {
+            "titleid": 249,
+            "itemname": "●",
+            "itemvalue": null,
+            "sublist": []
+          },
+          {
+            "titleid": 293,
+            "itemname": "",
+            "itemvalue": null,
+            "sublist": [
+              {
+                "name": "2-2-2",
+                "value": "●"
+              }
+            ]
+          }
+        ],
+        "sort": 2
+      }
+    ]
+  }
+}
