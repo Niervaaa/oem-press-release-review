@@ -434,7 +434,7 @@ class DocxBodyHardeningTests(unittest.TestCase):
             out = root / "inspection"
             body = ''.join([
                 '<w:p><w:r><w:t>正文</w:t></w:r></w:p>',
-                '<w:tbl><w:tr><w:tc><w:p><w:r><w:t>保留</w:t></w:r><w:del w:id="1" w:author="审阅者"><w:r><w:delText>删除一</w:delText></w:r><w:del><w:r><w:t>删除二</w:t></w:r></w:del></w:p></w:tc></w:tr></w:tbl>',
+                '<w:tbl><w:tr><w:tc><w:p><w:r><w:t>保留</w:t></w:r><w:del w:id="1" w:author="审阅者"><w:r><w:delText>删除一</w:delText></w:r><w:r><w:t>删除二</w:t></w:r></w:del></w:p></w:tc></w:tr></w:tbl>',
             ])
             make_docx(docx, body=body)
             result = run_inspector(docx, out)
