@@ -156,11 +156,11 @@ def markdown_text(value):
     return text
 
 
-def normalize_autohome(source_path, out_dir, target_energy=None, source_url=None, fetched_at=None):
+def normalize_auto_media(source_path, out_dir, target_energy=None, source_url=None, fetched_at=None):
     raw_bytes = source_path.read_bytes()
     payload = redact_untrusted(json.loads(raw_bytes.decode("utf-8-sig")))
     if payload.get("returncode") not in {0, "0", None}:
-        raise ValueError(f"汽车之家接口返回错误：{payload.get('message') or payload.get('returncode')}")
+        raise ValueError(f"汽车垂媒接口返回错误：{payload.get('message') or payload.get('returncode')}")
     result = payload.get("result")
     if not isinstance(result, dict):
         raise ValueError("JSON 缺少 result 对象")
@@ -188,9 +188,9 @@ def normalize_autohome(source_path, out_dir, target_energy=None, source_url=None
     input_file = redact_text(Path(str(source_path).replace("\\", "/")).name)
     normalized_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     source = {
-        "source_type": "其他（汽车之家公开参数页，非官方）",
+        "source_type": "其他（汽车垂媒公开参数页，非官方）",
         "source_type_code": "public_media_config_page",
-        "source_name": "汽车之家公开参数页/同源参数接口",
+        "source_name": "汽车垂媒公开参数页/同源参数接口",
         "source_url": redact_text(source_url or "未提供，待补"),
         "source_date": "页面发布日期未提供，待补",
         "capture_time": redact_text(fetched_at or "未提供，待补"),
@@ -476,7 +476,7 @@ def normalize_autohome(source_path, out_dir, target_energy=None, source_url=None
 
 
 def main():
-    parser = argparse.ArgumentParser(description="规范化汽车之家 getParamConf JSON，输出版型矩阵、事实卡与能源类型硬门")
+    parser = argparse.ArgumentParser(description="规范化汽车垂媒 getParamConf JSON，输出版型矩阵、事实卡与能源类型硬门")
     parser.add_argument("json_path", type=Path)
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--target-energy", choices=list(ENERGY_LABELS))
@@ -484,7 +484,7 @@ def main():
     parser.add_argument("--fetched-at")
     args = parser.parse_args()
     try:
-        normalized, facts, gate = normalize_autohome(args.json_path, args.out, args.target_energy, args.source_url, args.fetched_at)
+        normalized, facts, gate = normalize_auto_media(args.json_path, args.out, args.target_energy, args.source_url, args.fetched_at)
     except (OSError, ValueError, TypeError, KeyError, AttributeError, json.JSONDecodeError) as exc:
         print(f"错误：{redact_text(str(exc))}", file=sys.stderr)
         return 2

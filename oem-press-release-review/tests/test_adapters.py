@@ -156,7 +156,7 @@ def make_shared_image_docx(path, missing_target=False):
     source.unlink()
 
 
-def autohome_sample():
+def auto_media_sample():
     names = {
         1: "车型名称", 3: "厂商指导价(元)", 6: "能源类型", 8: "上市时间",
         21: "长*宽*高(mm)", 34: "轴距(mm)", 79: "系统综合功率(kW)",
@@ -515,14 +515,14 @@ class PublicPageCaptureTests(unittest.TestCase):
             server.server_close()
 
 
-class AutohomeNormalizationTests(unittest.TestCase):
+class AutoMediaNormalizationTests(unittest.TestCase):
     def test_cross_energy_type_is_blocked(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             source = root / "params.json"
-            source.write_text(json.dumps(autohome_sample(), ensure_ascii=False), encoding="utf-8")
+            source.write_text(json.dumps(auto_media_sample(), ensure_ascii=False), encoding="utf-8")
             out = root / "normalized"
-            result = run_script("normalize_autohome_config.py", source, "--out", out, "--target-energy", "pure_ev", "--source-url", "https://config.example.invalid/series/999.html")
+            result = run_script("normalize_auto_media_config.py", source, "--out", out, "--target-energy", "pure_ev", "--source-url", "https://config.example.invalid/series/999.html")
             self.assertEqual(result.returncode, 0, result.stderr)
             gate = json.loads((out / "gate.json").read_text(encoding="utf-8"))
             self.assertEqual(gate["status"], "blocked")
@@ -535,9 +535,9 @@ class AutohomeNormalizationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             source = root / "params.json"
-            source.write_text(json.dumps(autohome_sample(), ensure_ascii=False), encoding="utf-8")
+            source.write_text(json.dumps(auto_media_sample(), ensure_ascii=False), encoding="utf-8")
             out = root / "normalized"
-            result = run_script("normalize_autohome_config.py", source, "--out", out, "--target-energy", "range_extender")
+            result = run_script("normalize_auto_media_config.py", source, "--out", out, "--target-energy", "range_extender")
             self.assertEqual(result.returncode, 0, result.stderr)
             data = json.loads((out / "normalized.json").read_text(encoding="utf-8"))
             self.assertEqual(data["series"]["seriesname"], "Anonymous-Series-001")
@@ -572,7 +572,7 @@ class AutohomeNormalizationTests(unittest.TestCase):
             root = Path(td)
             source = root / "bad.json"
             source.write_text(json.dumps({"returncode": 0, "result": {"titlelist": [None], "datalist": [None]}}), encoding="utf-8")
-            result = run_script("normalize_autohome_config.py", source, "--out", root / "out")
+            result = run_script("normalize_auto_media_config.py", source, "--out", root / "out")
             self.assertEqual(result.returncode, 2)
             self.assertIn("错误", result.stderr)
 
@@ -581,7 +581,7 @@ class PackagedFixtureTests(unittest.TestCase):
     def test_packaged_fixtures_regress_real_case_structure(self):
         fixtures = SKILL_DIR / "tests" / "fixtures"
         docx = fixtures / "anonymized_press_release.docx"
-        params = fixtures / "anonymized_autohome_params.json"
+        params = fixtures / "anonymized_auto_media_params.json"
         self.assertTrue(docx.exists())
         self.assertTrue(params.exists())
         with tempfile.TemporaryDirectory() as td:
@@ -611,7 +611,7 @@ class PackagedFixtureTests(unittest.TestCase):
             self.assertTrue(data["flags"]["has_tracking_fields"])
             self.assertTrue(data["flags"]["has_script_fields"])
             self.assertIn("Anonymous-Series-001", (root / "docx" / "body.txt").read_text(encoding="utf-8"))
-            result = run_script("normalize_autohome_config.py", params, "--out", root / "config", "--target-energy", "pure_ev")
+            result = run_script("normalize_auto_media_config.py", params, "--out", root / "config", "--target-energy", "pure_ev")
             self.assertEqual(result.returncode, 0, result.stderr)
             gate = json.loads((root / "config" / "gate.json").read_text(encoding="utf-8"))
             self.assertEqual(gate["status"], "blocked")

@@ -16,7 +16,7 @@
 
 1. 准备官方信息与待检稿；多篇稿件按渠道分开。
 2. DOCX 运行 `scripts/inspect_docx.py`，逐张查看图片，并检查链接、字段、修订、批注、隐藏文字和属性。
-3. 动态公开参数页在获授权后运行 `scripts/capture_public_page.py`；汽车之家 JSON 运行 `scripts/normalize_autohome_config.py`。
+3. 动态公开参数页在获授权后运行 `scripts/capture_public_page.py`；汽车垂媒 JSON 运行 `scripts/normalize_auto_media_config.py`。
 4. 先核对目标与来源的车系、能源类型、版型、市场和日期；跨能源类型直接阻断。
 5. 按 `SKILL.md` 建信息卡，再做信息、表述、风险、图片授权和技术卫生核查。
 6. 先给 `templates/决策简报.md`，再给 `templates/核查输出表.md` 的 8 列完整证据附录。
@@ -30,10 +30,10 @@
 
 ## 文件
 
-- `SKILL.md`：完整配方，v1.1.1
+- `SKILL.md`：完整配方，v1.1.2
 - `scripts/inspect_docx.py`：DOCX 只读结构检查，OCR 可选
 - `scripts/capture_public_page.py`：公开页 HTML/脚本/API 快照
-- `scripts/normalize_autohome_config.py`：汽车之家配置规范化与能源类型硬门
+- `scripts/normalize_auto_media_config.py`：汽车垂媒配置规范化与能源类型硬门
 - `templates/官方信息卡.md`：12 列信息卡
 - `templates/决策简报.md`：第一层发布决策
 - `templates/核查输出表.md`：第二层证据附录与唯一 8 列标准
@@ -51,7 +51,7 @@
 - `tests/test_page_hardening.py`：逐跳同源与 HTTP 状态回归
 - `tests/test_normalization_hardening.py`：能源硬门、脱敏、标记与输出契约回归
 - `tests/fixtures/anonymized_press_release.docx`：含 8 张有效匿名 PNG、7 条增程图注的 DOCX 回归夹具
-- `tests/fixtures/anonymized_autohome_params.json`：匿名参数结构回归夹具
+- `tests/fixtures/anonymized_auto_media_params.json`：匿名参数结构回归夹具
 
 ## 本地测试
 

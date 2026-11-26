@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from test_adapters import autohome_sample, run_script
+from test_adapters import auto_media_sample, run_script
 
 
 REDACTED = "敏感内容已脱敏，待人工核对"
@@ -76,7 +76,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         source.write_bytes(raw)
         out = self.root / "out"
         args = [
-            "normalize_autohome_config.py", source, "--out", out,
+            "normalize_auto_media_config.py", source, "--out", out,
             "--target-energy", target_energy,
         ]
         if source_url is not None:
@@ -92,7 +92,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         return source, raw, normalized, facts, gate, matrix
 
     def test_unknown_target_is_blocked_as_unclear_scope(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         for index in range(2):
             set_param(payload, "能源类型", "未知", trim_index=index)
         _, _, _, _, gate, _ = self.normalize(payload, target_energy="unknown")
@@ -102,7 +102,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn("适用范围不明", gate["reason"])
 
     def test_known_target_cannot_match_unknown_only_source(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         for index in range(2):
             set_param(payload, "能源类型", "未知", trim_index=index)
         _, _, _, _, gate, _ = self.normalize(payload, target_energy="pure_ev")
@@ -112,7 +112,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn("未知", gate["reason"])
 
     def test_mixed_source_allows_known_target_but_excludes_unknown_trim(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         set_param(payload, "能源类型", "纯电", trim_index=0)
         set_param(payload, "能源类型", "未知", trim_index=1)
         _, _, normalized, facts, gate, matrix = self.normalize(payload, target_energy="pure_ev")
@@ -134,7 +134,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         ))
 
     def test_cross_energy_mismatch_marks_all_trims_unusable_and_emits_no_facts(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         _, _, normalized, facts, gate, matrix = self.normalize(payload, target_energy="pure_ev")
         self.assertEqual(gate["status"], "blocked")
         self.assertEqual(
@@ -146,7 +146,7 @@ class NormalizationHardeningTests(unittest.TestCase):
             self.assertNotIn(trim["specname"], matrix)
 
     def test_synthetic_sensitive_sentinels_are_redacted_before_all_outputs(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         sentinels = {
             "phone": "13800001111",
             "id_card": "110101199001011234",
@@ -175,7 +175,7 @@ class NormalizationHardeningTests(unittest.TestCase):
             self.assertIn(REDACTED, serialized)
 
     def test_metadata_and_condition_keys_are_redacted_without_changing_raw_sha(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         file_sentinel = "13800002222"
         url_sentinel = "metadata-test@example.com"
         time_sentinel = "18.88万"
@@ -205,7 +205,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertTrue(all(value == REDACTED for value in condition.values()))
 
     def test_normal_phone_related_configuration_is_not_over_redacted(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         value = "支持手机互联、smartphone、headphone"
         set_param(payload, "座椅布局", value)
         _, _, normalized, facts, _, _ = self.normalize(payload)
@@ -217,7 +217,7 @@ class NormalizationHardeningTests(unittest.TestCase):
             self.assertNotIn(REDACTED, serialized)
 
     def test_phone_label_is_kept_while_embedded_number_is_removed(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         phone = "13900003333"
         set_param(payload, "座椅布局", f"手机：{phone}")
         _, _, normalized, facts, _, matrix = self.normalize(payload)
@@ -232,7 +232,7 @@ class NormalizationHardeningTests(unittest.TestCase):
     def test_source_and_fact_locations_use_basename_only(self):
         relative = Path("Users") / "sentinel-user" / "private" / "params.json"
         source, _, normalized, facts, _, _ = self.normalize(
-            autohome_sample(), source_relative=relative,
+            auto_media_sample(), source_relative=relative,
         )
         self.assertEqual(normalized["source"]["input_file"], source.name)
         self.assertNotIn("sentinel-user", json.dumps(normalized, ensure_ascii=False))
@@ -242,7 +242,7 @@ class NormalizationHardeningTests(unittest.TestCase):
             self.assertNotIn(str(source), fact["证据定位"])
 
     def test_single_selection_keeps_ordered_details_and_marker(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         set_param(payload, "座椅布局", sublist=[{"name": "A配置", "value": "●"}])
         _, _, normalized, facts, _, _ = self.normalize(payload)
         trim = normalized["trims"][0]
@@ -252,7 +252,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn("A配置●", fact["官方原文或脱敏摘录"])
 
     def test_mixed_selection_details_preserve_order_and_per_option_symbols(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         details = [
             {"name": "A配置", "value": "●"},
             {"name": "B配置", "value": "○"},
@@ -264,7 +264,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertEqual(trim["parameters"]["座椅布局"], "A配置● / B配置○")
 
     def test_unnamed_selection_keeps_marker_without_rendering_empty_item(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         details = [
             {"name": "", "value": "●"},
             {"name": "A配置", "value": "○"},
@@ -282,7 +282,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn("选配", fact["官方原文或脱敏摘录"])
 
     def test_itemname_and_sublist_are_merged_without_losing_markers(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         details = [
             {"name": "A配置", "value": "●"},
             {"name": "B配置", "value": "○"},
@@ -294,7 +294,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertEqual(trim["parameters"]["座椅布局"], "座椅配置 / A配置● / B配置○")
 
     def test_symbol_itemname_keeps_its_meaning_in_value_and_fact_note(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         set_param(payload, "座椅布局", "●", [{"name": "A配置", "value": "○"}])
         _, _, normalized, facts, _, _ = self.normalize(payload)
         trim = normalized["trims"][0]
@@ -306,7 +306,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn("待核", fact["官方原文或脱敏摘录"])
 
     def test_specname_injection_cannot_break_markdown_rows_or_headings(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         payload["result"]["bread"]["brandname"] = "品牌\n## 品牌注入"
         payload["result"]["bread"]["seriesname"] = "车系\r\n# 系列注入"
         payload["result"]["datalist"][0]["specname"] = "2026款 | 注入\r\n## FAKE HEADING\n第二行\t\x00\x1b"
@@ -329,7 +329,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertIn(r"2026款 \| 注入", injected_row)
 
     def test_inline_markdown_and_html_are_neutralized_in_headings_and_cells(self):
-        payload = autohome_sample()
+        payload = auto_media_sample()
         payload["result"]["bread"]["brandname"] = "品牌 <b>加粗</b> [链接](https://example.invalid)"
         payload["result"]["bread"]["seriesname"] = "车系 **强调** _斜体_ ~~删除~~ `代码`"
         payload["result"]["datalist"][0]["specname"] = (
@@ -352,7 +352,7 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertEqual(len({len(table_cells(line)) for line in table_lines}), 1)
 
     def test_fact_field_types_use_template_chinese_enum(self):
-        _, _, _, facts, _, _ = self.normalize(autohome_sample())
+        _, _, _, facts, _, _ = self.normalize(auto_media_sample())
         expected = {
             "车型名称": "参数",
             "厂商指导价": "价格",
@@ -368,24 +368,24 @@ class NormalizationHardeningTests(unittest.TestCase):
         self.assertTrue(all(row["字段类型"] in allowed for row in facts))
 
     def test_fact_cards_keep_fixed_twelve_columns(self):
-        _, _, _, facts, _, _ = self.normalize(autohome_sample())
+        _, _, _, facts, _, _ = self.normalize(auto_media_sample())
         self.assertTrue(facts)
         for fact in facts:
             self.assertEqual(list(fact), FACT_COLUMNS)
 
     def test_utf8_bom_json_is_accepted_without_changing_raw_sha(self):
-        source, raw, normalized, _, _, _ = self.normalize(autohome_sample(), bom=True)
+        source, raw, normalized, _, _, _ = self.normalize(auto_media_sample(), bom=True)
         self.assertTrue(source.read_bytes().startswith(codecs.BOM_UTF8))
         self.assertEqual(normalized["source"]["input_sha256"], hashlib.sha256(raw).hexdigest())
         self.assertEqual(normalized["trim_count"], 2)
 
     def test_cli_stdout_redacts_sensitive_values_in_absolute_output_path(self):
         source = self.root / "params.json"
-        source.write_text(json.dumps(autohome_sample(), ensure_ascii=False), encoding="utf-8")
+        source.write_text(json.dumps(auto_media_sample(), ensure_ascii=False), encoding="utf-8")
         sentinel = "13800004444"
         out = self.root / f"out-{sentinel}"
         result = run_script(
-            "normalize_autohome_config.py", source, "--out", out,
+            "normalize_auto_media_config.py", source, "--out", out,
             "--target-energy", "range_extender",
         )
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -396,7 +396,7 @@ class NormalizationHardeningTests(unittest.TestCase):
     def test_cli_error_redacts_sensitive_values_before_stderr_serialization(self):
         sentinel = "13800005555"
         source = self.root / f"missing-{sentinel}.json"
-        result = run_script("normalize_autohome_config.py", source, "--out", self.root / "out")
+        result = run_script("normalize_auto_media_config.py", source, "--out", self.root / "out")
         self.assertEqual(result.returncode, 2)
         self.assertNotIn(sentinel, result.stderr)
         self.assertIn(REDACTED, result.stderr)
@@ -405,7 +405,7 @@ class NormalizationHardeningTests(unittest.TestCase):
     def test_malformed_json_error_is_short_and_has_no_traceback(self):
         source = self.root / "bad.json"
         source.write_bytes(b'{"returncode":')
-        result = run_script("normalize_autohome_config.py", source, "--out", self.root / "out")
+        result = run_script("normalize_auto_media_config.py", source, "--out", self.root / "out")
         self.assertEqual(result.returncode, 2)
         self.assertTrue(result.stderr.startswith("错误："))
         self.assertLess(len(result.stderr), 300)

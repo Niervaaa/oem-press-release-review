@@ -3,7 +3,7 @@
 **Automotive Press Release Review Agent Skill｜车企新闻稿发布前核查 Skill**
 
 [![Release](https://img.shields.io/github/v/release/Niervaaa/oem-press-release-review?label=release)](https://github.com/Niervaaa/oem-press-release-review/releases/latest)
-[![Version](https://img.shields.io/badge/version-1.1.1-blue)](https://github.com/Niervaaa/oem-press-release-review/releases/tag/v1.1.1)
+[![Version](https://img.shields.io/badge/version-1.1.2-blue)](https://github.com/Niervaaa/oem-press-release-review/releases/tag/v1.1.2)
 [![Tests](https://img.shields.io/badge/tests-75%20passing-brightgreen)](https://github.com/Niervaaa/oem-press-release-review/tree/main/oem-press-release-review/tests)
 [![Python](https://img.shields.io/badge/Python-3.x-blue)](https://github.com/Niervaaa/oem-press-release-review/tree/main/oem-press-release-review/scripts)
 [![License](https://img.shields.io/badge/license-LicenseRef--Internal--Use-lightgrey)](https://github.com/Niervaaa/oem-press-release-review/blob/main/oem-press-release-review/SKILL.md)
@@ -28,7 +28,7 @@
 | --- | --- | --- |
 | DOCX 全结构检查 | 只读解析，不修改原文件；逐张查看图片 | `inspection.json`、`body.txt`、`tables.json`、`media/` |
 | 版型硬门 | 车系、能源类型、版型、市场、日期逐项对照 | `gate.json`、版型矩阵 |
-| 汽车之家参数规范化 | 保留原始 SHA-256、选装标记和来源状态 | `normalized.json`、`facts.json`、`matrix.md` |
+| 汽车垂媒参数规范化 | 保留原始 SHA-256、选装标记和来源状态 | `normalized.json`、`facts.json`、`matrix.md` |
 | 公开页捕获 | 仅允许获授权的公开地址；逐跳校验重定向与同源 API | HTML、文本、脚本/API 快照与元数据 |
 | 图片与授权核查 | 图片车型、价格、状态、人物与联名主张进入证据链 | 图片/授权表与补证清单 |
 | 技术卫生 | 跟踪字段、脚本字段、修订、批注、隐藏内容、宏与嵌入对象 | 风险定位与清理后复检条件 |
@@ -38,12 +38,12 @@
 
 ### 1. 下载发布包
 
-从 [Latest Release](https://github.com/Niervaaa/oem-press-release-review/releases/latest) 下载 `车企新闻稿核查_Skill_v1.1.1.zip`，或直接使用仓库根目录的同名文件。
+从 [Latest Release](https://github.com/Niervaaa/oem-press-release-review/releases/latest) 下载 `车企新闻稿核查_Skill_v1.1.2.zip`，或直接使用仓库根目录的同名文件。
 
 发布包 SHA-256：
 
 ```text
-9a998d37c2afc85a2e3f7ba5b1479a7adb05bb81b1f66c73ed8c928c4641716d
+57b74dd0b89bc75b78108c3bbea5b609b659389fc3000a05f073e97cc40e37a2
 ```
 
 ### 2. 安装为 Skill
@@ -87,10 +87,10 @@ python scripts/capture_public_page.py "https://example.com/series/config" \
 
 仅在用户明确授权后访问公开页面。脚本不执行网页脚本；API 必须与页面同源，重定向逐跳校验。默认拒绝回环、私网、共享地址、链路本地和保留地址。
 
-### 汽车之家配置规范化
+### 汽车垂媒配置规范化
 
 ```bash
-python scripts/normalize_autohome_config.py "params.json" \
+python scripts/normalize_auto_media_config.py "params.json" \
   --out "output/normalized" \
   --target-energy pure_ev
 ```
@@ -131,7 +131,7 @@ oem-press-release-review/
 ├── scripts/
 │   ├── inspect_docx.py
 │   ├── capture_public_page.py
-│   └── normalize_autohome_config.py
+│   └── normalize_auto_media_config.py
 ├── templates/
 │   ├── 官方信息卡.md
 │   ├── 决策简报.md
@@ -156,7 +156,7 @@ oem-press-release-review/
     ├── test_normalization_hardening.py
     └── fixtures/
         ├── anonymized_press_release.docx
-        └── anonymized_autohome_params.json
+        └── anonymized_auto_media_params.json
 ```
 
 ## 设计原则

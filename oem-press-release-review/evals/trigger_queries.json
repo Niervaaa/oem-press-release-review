@@ -4,11 +4,11 @@
   {"query": "这份上市口播稿跟官方口径一致吗", "should_trigger": true},
   {"query": "多家渠道文案说法不一样，发布前统一核查", "should_trigger": true},
   {"query": "检查 DOCX 新闻稿里的图片、图注、修订和隐藏链接", "should_trigger": true},
-  {"query": "用汽车之家参数页核查纯电版稿件能不能发", "should_trigger": true},
+  {"query": "用汽车垂媒参数页核查纯电版稿件能不能发", "should_trigger": true},
   {"query": "帮我写一篇车企新品新闻稿", "should_trigger": false},
   {"query": "核查一份车企招股书的证券合规风险", "should_trigger": false},
   {"query": "总结这次车展新闻", "should_trigger": false},
   {"query": "把车企海报文案翻译成英文", "should_trigger": false},
   {"query": "把这份 DOCX 转成 PDF", "should_trigger": false},
-  {"query": "抓取汽车之家所有车型参数做一个数据库", "should_trigger": false}
+  {"query": "抓取汽车垂媒所有车型参数做一个数据库", "should_trigger": false}
 ]

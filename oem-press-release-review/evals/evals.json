@@ -122,7 +122,7 @@
       "prompt": "请核查一份车企纯电版发布 DOCX。可用参数材料只有某公开汽车参数平台的 getParamConf 结构 JSON，且该 JSON 只列增程版。请按现有流程给出信息卡、逐条核查和最终发布结论，不得联网，不得把非官方参数页写成官方配置表，不得新增材料外事实。",
       "required_test_inputs": [
         "tests/fixtures/anonymized_press_release.docx",
-        "tests/fixtures/anonymized_autohome_params.json"
+        "tests/fixtures/anonymized_auto_media_params.json"
       ],
       "expected_output": "先给决策简报，再给完整证据附录；检查 DOCX 正文以外的图片、图注、页眉页脚、链接、字段、修订、批注和属性；指出纯电版待检稿与增程版参数来源的版型/能源类型错配；检查海报和人物相关授权；指出点击跟踪字段和脚本字段等技术卫生问题；明确证据充分度、问题分类、仅一篇未做跨渠道对照，并判不可发。",
       "expectations": [

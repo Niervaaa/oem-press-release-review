@@ -137,7 +137,7 @@ def fetch(url, timeout, max_bytes, allow_loopback=False, expected_origin=None):
         connection = connection_class(parsed.hostname, parsed.port, timeout, allow_loopback)
         path = urllib.parse.urlunsplit(("", "", parsed.path or "/", parsed.query, ""))
         try:
-            connection.request("GET", path, headers={"User-Agent": "Mozilla/5.0 (compatible; OEMPressReview/1.1.1)", "Accept": "text/html,application/json,application/javascript;q=0.9,*/*;q=0.8", "Connection": "close"})
+            connection.request("GET", path, headers={"User-Agent": "Mozilla/5.0 (compatible; OEMPressReview/1.1.2)", "Accept": "text/html,application/json,application/javascript;q=0.9,*/*;q=0.8", "Connection": "close"})
             response = connection.getresponse()
             if response.status in {301, 302, 303, 307, 308} and response.getheader("Location"):
                 current_url = urllib.parse.urljoin(current_url, response.getheader("Location"))

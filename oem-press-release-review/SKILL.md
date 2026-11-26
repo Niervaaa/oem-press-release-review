@@ -1,8 +1,8 @@
 ---
 name: oem-press-release-review
-description: Use when 即将对外发布的车企新闻稿、社媒文案、海报字、口播或说明字幕需要对照官方信息核查一致性、表述越界或发布风险；也适用于车展、科技日、上市发布等高压快出场景。收到 DOCX 新闻稿需检查正文以外的图片、图注、修订、批注、隐藏文字或链接，或用汽车之家等公开参数页核对车型、版型、能源类型与参数时，也使用本 Skill。
+description: Use when 即将对外发布的车企新闻稿、社媒文案、海报字、口播或说明字幕需要对照官方信息核查一致性、表述越界或发布风险；也适用于车展、科技日、上市发布等高压快出场景。收到 DOCX 新闻稿需检查正文以外的图片、图注、修订、批注、隐藏文字或链接，或用汽车垂媒等公开参数页核对车型、版型、能源类型与参数时，也使用本 Skill。
 agent_created: true
-version: "1.1.1"
+version: "1.1.2"
 license: LicenseRef-Internal-Use
 ---
 
@@ -40,7 +40,7 @@ license: LicenseRef-Internal-Use
 | 图片文字难读 | 在本机有 Tesseract 时加 `--ocr`；没有则保留 `OCR_UNAVAILABLE` 并人工看图 | OCR 仅作辅助，不能替代视觉核验 |
 | 公开参数页 | 获授权后运行 `scripts/capture_public_page.py <URL> --out <目录> --fetch-scripts --scan-api` | 原始 HTML、可见文本、免责声明、读取时间、脚本清单和 API 候选 |
 | 已定位同源 API | 运行捕获脚本并传 `--api-url <API URL>`，保存原始 JSON | API 响应、状态、时间、SHA-256；不执行网页脚本 |
-| 汽车之家 getParamConf JSON | 运行 `scripts/normalize_autohome_config.py <JSON> --out <目录> --target-energy <pure_ev/range_extender/hybrid>` | 版型矩阵、事实卡、差异和能源类型硬门 |
+| 汽车垂媒 getParamConf JSON | 运行 `scripts/normalize_auto_media_config.py <JSON> --out <目录> --target-energy <pure_ev/range_extender/hybrid>` | 版型矩阵、事实卡、差异和能源类型硬门 |
 
 详细命令与判读见 `references/输入适配与取证.md`。脚本缺失时，用 DOCX 解包和 JSON 解析完成同等检查，并在证据附录写明替代方式；不得退化为只读正文。公开页捕获默认只允许全局可路由地址，拒绝回环、私网、共享地址、链路本地和保留地址；连接后复核实际对端 IP，并逐跳校验重定向。API 必须与页面同源，且每一跳重定向都不得跨源。`--allow-loopback` 仅用于本机测试。
 
@@ -67,7 +67,7 @@ license: LicenseRef-Internal-Use
 - 车系或能源类型不同：问题类型写「版型错配」，风险高，结论不可发。增程版不得证明纯电版，反之亦然。
 - 能源类型相同但版型不同：只能证明该来源版型；高配不得外推全系，不得把「未列出」写成「没有」。
 - 市场或日期不明：若主张依赖具体市场、发布日期、当前价格、上市或交付状态，写「证据待补」，风险高，结论不可发；若主张不依赖该字段，只记证据限制，不得仅因市场或日期未写而否决整篇。
-- 公开媒体参数页即使数据完整，来源类型仍为「其他（汽车之家公开参数页，非官方）」，核验状态写「用户提供，未独立核验」，不能替代厂商正式配置表。
+- 公开媒体参数页即使数据完整，来源类型仍为「其他（汽车垂媒公开参数页，非官方）」，核验状态写「用户提供，未独立核验」，不能替代厂商正式配置表。
 
 ## 2. 建立信息卡
 
